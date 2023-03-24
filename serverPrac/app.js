@@ -1,5 +1,8 @@
 import http from 'http'
 import fs from 'fs'
+import path, { resolve } from 'path'
+import url, { URL } from 'url'
+
 
 function serveStaticFile(response, path, contentTpye, responseCode){
   fs.readFile(path, function(err, data){
@@ -13,19 +16,25 @@ function serveStaticFile(response, path, contentTpye, responseCode){
   })
 } //serveStaticFile 끝
 
+
+
 const server = http.createServer(function(request, response){
   const url = request.url.toLowerCase();
+  const reqSplit = request.url.split('?')[0]
+  // const reqUrl = path.basename(request.url)
+  console.log(path.basename(request.url))
+  console.log(path.basename(request.method))
   switch (url) {
     case '/':
-      serveStaticFile(response, './server/index.html','text/html',200);
+      serveStaticFile(response, path.join(resolve(),'server/index.html'),'text/html',200);
       console.log(url)
     break;
-    case '/about':
-      serveStaticFile(response, './server/about.html','text/html',200);
+    case startsWith('/about'):
+      serveStaticFile(response, path.join(resolve(),'server/about.html'),'text/html',200);
       console.log(url)
       break;
     case '/contact':
-      serveStaticFile(response, './server/contact.html','text/html',200);
+      serveStaticFile(response, path.join(resolve(),'server/contact.html'),'text/html',200);
       console.log(url)
       break;
 
@@ -33,11 +42,11 @@ const server = http.createServer(function(request, response){
       //나머지 파일
     case '/style.css':
       serveStaticFile(response, './server/style.css','text/css',200);
-      console.log(url)
+      // console.log(url)
       break;
     case '/script.js':
       serveStaticFile(response, './server/script.js','text/javascript',200);
-      console.log(url)
+      // console.log(url)
       break;
 
 
@@ -46,13 +55,13 @@ const server = http.createServer(function(request, response){
       serveStaticFile(response, './inputServerHtml/index.js','text/javascript',200)
       break;
     case '/inputserverhtml/about.js':
-      serveStaticFile(response, '/inputserverhtml/about.js','text/javascript', 200)
+      serveStaticFile(response, './inputserverhtml/about.js','text/javascript', 200)
       break;
     case '/inputserverhtml/contact.js':
-      serveStaticFile(response, '/inputserverhtml/contact.js','text/javascript', 200)
+      serveStaticFile(response, './inputserverhtml/contact.js','text/javascript', 200)
       break;
     case '/inputserverhtml/404.js':
-      serveStaticFile(response, '/inputserverhtml/404.js','text/javascript', 200)
+      serveStaticFile(response, './inputserverhtml/404.js','text/javascript', 200)
       break;
 
 

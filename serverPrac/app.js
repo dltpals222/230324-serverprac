@@ -1,11 +1,11 @@
 import http from 'http'
 import fs from 'fs'
 import path, { resolve } from 'path'
-import url, { URL } from 'url'
+// import url, { URL } from 'url'
 
 
-function serveStaticFile(response, path, contentTpye, responseCode){
-  fs.readFile(path, function(err, data){
+function serveStaticFile(response, path1, contentTpye, responseCode){
+  fs.readFile(path1, function(err, data){
     if(err){
       response.writeHead(500,{'content-type':'text/plain'})
       response.end('500-Internal Error')
@@ -20,16 +20,16 @@ function serveStaticFile(response, path, contentTpye, responseCode){
 
 const server = http.createServer(function(request, response){
   const url = request.url.toLowerCase();
-  const reqSplit = request.url.split('?')[0]
+  // const reqSplit = request.url.split('?')[0]
   // const reqUrl = path.basename(request.url)
   console.log(path.basename(request.url))
-  console.log(path.basename(request.method))
+  console.log(url)
   switch (url) {
     case '/':
       serveStaticFile(response, path.join(resolve(),'server/index.html'),'text/html',200);
       console.log(url)
-    break;
-    case startsWith('/about'):
+      break;  
+    case '/about':
       serveStaticFile(response, path.join(resolve(),'server/about.html'),'text/html',200);
       console.log(url)
       break;
